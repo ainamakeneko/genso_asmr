@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>周期表ASMR学習アプリ</title>
+    <meta name="description" content="インタラクティブな周期表で元素を学習し、ASMRを楽しめるアプリ">
+    <meta name="theme-color" content="#764ba2">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>周期表ASMR学習アプリ</h1>
+            <p>元素をクリックして詳細とASMR動画を楽しもう</p>
+        </header>
+
+        <main>
+            <div class="controls">
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="元素名または記号で検索...">
+                    <button id="clearSearch">クリア</button>
+                </div>
+                <div class="filter-container">
+                    <label for="categoryFilter">分類でフィルター:</label>
+                    <select id="categoryFilter">
+                        <option value="">すべて</option>
+                        <option value="alkali-metal">アルカリ金属</option>
+                        <option value="alkaline-earth-metal">アルカリ土類金属</option>
+                        <option value="transition-metal">遷移金属</option>
+                        <option value="post-transition-metal">典型金属</option>
+                        <option value="metalloid">半金属</option>
+                        <option value="nonmetal">非金属</option>
+                        <option value="halogen">ハロゲン</option>
+                        <option value="noble-gas">希ガス</option>
+                        <option value="actinide">アクチノイド</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="periodic-table" id="periodicTable">
+                <!-- 周期表は JavaScript で動的に生成 -->
+            </div>
+
+            <div class="element-details" id="elementDetails" style="display: none;">
+                <div class="details-content">
+                    <button class="close-btn" id="closeBtn">&times;</button>
+                    <div class="element-info">
+                        <div class="element-symbol" id="elementSymbol"></div>
+                        <h2 id="elementName"></h2>
+                        <div class="element-properties">
+                            <p><strong>原子番号:</strong> <span id="atomicNumber"></span></p>
+                            <p><strong>原子量:</strong> <span id="atomicWeight"></span></p>
+                            <p><strong>分類:</strong> <span id="category"></span></p>
+                        </div>
+                        <div class="element-description" id="elementDescription"></div>
+                    </div>
+                    <div class="asmr-video">
+                        <h3>ASMR動画</h3>
+                        <div class="video-container" id="videoContainer">
+                            <!-- 動画はここに表示 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="elements-data.js"></script>
+    <script src="script.js"></script>
+
+    <script>
+        // サービスワーカーの登録
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch((registrationError) => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    </script>
+</body>
+
+</html>
